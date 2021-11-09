@@ -1,0 +1,66 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>
+        {% block title %}
+        Title Document
+        {% endblock title %}
+    </title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'main.css' %}">
+</head>
+<body>
+    <div>
+        <nav class="navbar navbar-expand-sm bg-light">
+            <a class="navbar-brand-sm-1" href="/">
+                <img src="{% static 'logo.png' %}" width="35" height="35" alt="">
+            </a>
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="\all_books">All Books</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="\my_books">My Books</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="\post_book">Post Book</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="\about_us">About Us</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="container-sm-2" align="right">
+                {% if user.is_authenticated %}
+                    {{ user.username }}
+                    <a href="{% url 'logout' %}?next=/">Logout</a>
+                {% else %}
+                    Not Logged In
+                    <a href="{% url 'login' %}?next=/">Login</a>
+                {% endif %}
+            </div>
+        </nav>
+        <br>
+        <div class="container" align="center">
+            <div class="col-sm-10 px-0">
+                <img src="{% static 'topbanner.jpg' %}" class="img-fluid" alt=""/>
+            </div>
+        </div>
+        <br>
+        <div class="container" align="center">
+            {% block content %}
+            Hello World!
+            {% endblock content %}
+        </div>
+        <footer class="text-center pt-5">
+            <div class="container">
+                <p>2021 Fall CS3337 Django Web Design Project Team 2</p>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>

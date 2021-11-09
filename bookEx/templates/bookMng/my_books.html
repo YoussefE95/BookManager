@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+My Books
+{% endblock title %}
+
+{% block content %}
+<h1 align="center">My Books</h1>
+<table class="table table-hover table-borderless bg-light mt-4">
+    <thead class="thead-light">
+        <tr>
+            <th class="text-center" scope="col">Name</th>
+            <th class="text-center" scope="col">Cover</th>
+            <th class="text-center" scope="col">Seller</th>
+            <th class="text-center" scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for book in books %}
+        <tr>
+            <td class="text-center align-middle">
+                <a href="book_details/{{ book.id }}"> {{ book.name }} </a>
+            </td>
+            <td class="text-center align-middle">
+                <img src="{% static book.pic_path %}" width="60" height="60">
+            </td>
+            <td class="text-center align-middle">
+                {{ book.username }}
+            </td>
+            <td class="text-center align-middle">
+                <a href="book_delete/{{ book.id }}"> Delete </a>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock content %}

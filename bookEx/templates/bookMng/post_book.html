@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+Add Book
+{% endblock title %}
+
+{% block content %}
+<h1>Post Book</h1>
+{% if submitted %}
+    <h5>You posted a book successfully</h5>
+{% else %}
+    <form class="mt-4" action="" enctype="multipart/form-data" method="post" novalidate>
+        {% csrf_token %}
+        <div class="row-6">
+            <div class="col-6">
+                {{ form.name|as_crispy_field }}
+            </div>
+        </div>
+        <div class="row-6">
+            <div class="col-6">
+                {{ form.web|as_crispy_field }}
+            </div>
+        </div>
+        <div class="row-6">
+            <div class="col-6">
+                {{ form.price|as_crispy_field }}
+            </div>
+        </div>
+        <div class="row-6">
+            <div class="col-6">
+                {{ form.picture|as_crispy_field }}
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary mt-3">Add</button>
+    </form>
+{% endif %}
+{% endblock content %}

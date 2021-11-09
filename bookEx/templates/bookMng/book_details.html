@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+Book Details
+{% endblock title %}
+
+{% block content %}
+<h1 align="center">Book Details</h1>
+<table class="table table-light bg-light mt-4">
+    <thead class="thead-light">
+        <tr>
+            <th class="text-center" scope="col">Name</th>
+            <th class="text-center" scope="col">Cover</th>
+            <th class="text-center" scope="col">Seller</th>
+            <th class="text-center" scope="col">Web Site</th>
+            <th class="text-center" scope="col">Price</th>
+            <th class="text-center" scope="col">Publish Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td class="text-center align-middle">
+                {{ book.name }}
+            </td>
+            <td class="text-center align-middle">
+                <img src="{% static book.pic_path %}" width="60" height="60">
+            </td>
+            <td class="text-center align-middle">
+                {{ book.username }}
+            </td>
+            <td class="text-center align-middle">
+                {{ book.web }}
+            </td>
+            <td class="text-center align-middle">
+                {{ book.price }}
+            </td>
+            <td class="text-center align-middle">
+                {{ book.publishdate }}
+            </td>
+        </tr>
+    </tbody>
+</table>
+{% endblock content %}
