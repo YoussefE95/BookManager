@@ -12,3 +12,7 @@ class BookForm(ModelForm):
             'price',
             'picture',
         ]
+
+
+class SearchForm(forms.Form):
+    query = forms.CharField(label='query', max_length=100)
