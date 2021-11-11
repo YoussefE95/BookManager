@@ -122,3 +122,17 @@ def book_delete(request, book_id):
     book.delete()
 
     return render(request, 'bookMng/book_delete.html')
+
+
+@login_required(login_url=reverse_lazy('login'))
+def faq(request):
+    books = Book.objects.all()
+    for b in books:
+        b.pic_path = b.picture.url[14:]
+    return render(request,
+                  'bookMng/faq.html',
+                  {
+                      'item_list': MainMenu.objects.all(),
+                      'books': books,
+                  })
+
