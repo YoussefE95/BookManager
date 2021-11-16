@@ -122,3 +122,6 @@ def book_delete(request, book_id):
     book.delete()
 
     return render(request, 'bookMng/book_delete.html')
+
+def shopping_cart(request):
+    return render(request, 'bookMng/shopping_cart.html')
