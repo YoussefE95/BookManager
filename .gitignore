@@ -2,4 +2,5 @@
 bookEx/__pycache__/
 bookMng/__pycache__/
 bookMng/migrations/
+bookEx/static/uploads/
 db.sqlite3
