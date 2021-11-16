@@ -1,0 +1,5 @@
+.idea
+bookEx/__pychache__/
+bookMng/__pychache__/
+bookMng/migrations/__pycache__/
+db.sqlite3
