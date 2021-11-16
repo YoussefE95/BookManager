@@ -1,5 +1,5 @@
 .idea
-bookEx/__pychache__/
-bookMng/__pychache__/
-bookMng/migrations/__pycache__/
+bookEx/__pycache__/
+bookMng/__pycache__/
+bookMng/migrations/
 db.sqlite3
