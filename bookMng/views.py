@@ -124,6 +124,7 @@ def book_delete(request, book_id):
     return render(request, 'bookMng/book_delete.html')
 
 
+
 @login_required(login_url=reverse_lazy('login'))
 def faq(request):
     books = Book.objects.all()
@@ -136,3 +137,6 @@ def faq(request):
                       'books': books,
                   })
 
+
+def shopping_cart(request):
+    return render(request, 'bookMng/shopping_cart.html')
