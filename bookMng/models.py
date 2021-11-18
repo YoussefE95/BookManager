@@ -20,3 +20,24 @@ class Book(models.Model):
 
     def __str__(self):
         return str(self.id)
+
+class Comment(models.Model):
+
+    name = models.CharField(blank=True, null=True, max_length=200)
+    email = models.EmailField(max_length=200)
+    comment = models.TextField(max_length=500)
+    publishdate = models.DateField(auto_now=True)
+    username = models.ForeignKey(User, blank=True, null=True, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return str(self.id)
+
+class Message(models.Model):
+
+    name = models.CharField(max_length=200)
+    message = models.TextField(max_length=500)
+    publishdate = models.DateField(auto_now=True)
+    username = models.ForeignKey(User, blank=True, null=True, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return str(self.id)

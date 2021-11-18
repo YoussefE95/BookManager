@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+Leave a Comment!
+{% endblock title %}
+
+{% block content %}
+
+<h1 align="center">Messages</h1>
+<!--Display comments-->
+{% for message in messages %}
+    {{ message.name }}
+    {{message.publishdate }}
+
+
+    <div> <p class="font-italic">{{message.message}}</p> </div>
+    <br>
+
+
+{% endfor %}
+
+<h2 align="left">Post a Message Below:</h2>
+{% if submitted %}
+  <h1>Your message has been added.</h1>
+{% else %}
+
+    <form action="" enctype="multipart/form-data" method="post" novalidate>
+        {{ form.as_p }}
+         <input type="submit" value="Send Message">
+        {% csrf_token %}
+    </form>
+{% endif %}
+{% endblock content %}

@@ -6,7 +6,8 @@ Book Details
 {% endblock title %}
 
 {% block content %}
-<h1>Book Details</h1>
+
+<h1 align="center">Book Details</h1>
 <table class="table table-light bg-light mt-4">
     <thead class="thead-light">
         <tr>
@@ -39,6 +40,33 @@ Book Details
                 {{ book.publishdate }}
             </td>
         </tr>
+
     </tbody>
+
 </table>
+<h2 align="left">Comments Section:</h2>
+<!--Display comments-->
+{% for comment in comments %}
+    {{ comment.name }}
+    {{ comment.email }}
+    {{ comment.publishdate }}
+
+
+    <div> <p class="font-italic">{{comment.comment}}</p> </div>
+    <br>
+
+
+{% endfor %}
+
+
+{% if submitted %}
+  <h1>Your comment has been added.</h1>
+{% else %}
+
+    <form action="" enctype="multipart/form-data" method="post" novalidate>
+        {{ form.as_p }}
+         <input type="submit" value="Add Comment">
+        {% csrf_token %}
+    </form>
+{% endif %}
 {% endblock content %}

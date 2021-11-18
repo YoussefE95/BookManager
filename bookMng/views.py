@@ -3,8 +3,12 @@ from django.http import HttpResponse
 from .models import MainMenu
 from .forms import BookForm
 from .forms import SearchForm
+from .forms import CommentForm
+from .forms import MessageForm
 from django.http import HttpResponseRedirect
 from .models import Book
+from .models import Comment
+from .models import Message
 from django.views.generic.edit import CreateView
 from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse_lazy
@@ -108,11 +112,34 @@ def about_us(request):
 def book_details(request, book_id):
     book = Book.objects.get(id=book_id)
     book.pic_path = book.picture.url[14:]
+    comments = Comment.objects.all()
+    submitted = False
+    if request.method == 'POST':
+        form = CommentForm(request.POST, request.FILES)
 
+        if form.is_valid():
+            # form.save()
+            comment = form.save(commit=False)
+            try:
+                comment.username = request.user
+            except Exception:
+                pass
+            comment.save()
+            return HttpResponseRedirect(f"/book_details/{book_id}")
+    else:
+        form = CommentForm()
+        if 'submitted' in request.GET:
+            submitted = True
     return render(request,
             'bookMng/book_details.html',
             {
+                'form': form,
+                'item_list': MainMenu.objects.all(),
+                'submitted': submitted,
                 'book': book,
+                'comments': comments,
+
+
             })
 
 
@@ -122,3 +149,33 @@ def book_delete(request, book_id):
     book.delete()
 
     return render(request, 'bookMng/book_delete.html')
+
+
+def message(request):
+    messages = Message.objects.all()
+    submitted = False
+    if request.method == 'POST':
+        form = MessageForm(request.POST, request.FILES)
+
+        if form.is_valid():
+            # form.save()
+            message = form.save(commit=False)
+            try:
+                message.username = request.user
+            except Exception:
+                pass
+            message.save()
+            return HttpResponseRedirect('/messagebox?submitted=True')
+    else:
+        form = MessageForm()
+        if 'submitted' in request.GET:
+            submitted = True
+
+    return render(request,'bookMng/messagebox.html',
+                  {
+
+                      'form': form,
+                      'item_list': MainMenu.objects.all(),
+                      'submitted': submitted,
+                      'messages': messages,
+                  })
