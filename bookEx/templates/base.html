@@ -38,15 +38,21 @@
                     <li class="nav-item">
                         <a class="nav-link" href="\about_us">About Us</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="\shopping_cart"><img src="{% static 'shoppingcart.png' %}" width="25" height="25"  ></a>
-                    </li>
                 </ul>
             </div>
             <div class="container-sm-2" align="right">
                 {% if user.is_authenticated %}
-                    {{ user.username }}
-                    <a href="{% url 'logout' %}?next=/">Logout</a>
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="\shopping_cart">
+                                <img src="{% static 'shoppingcart.png' %}" width="25" height="25">
+                            </a>
+                        </li>
+                        <li class="nav-item mt-2">
+                            {{ user.username }}
+                            <a href="{% url 'logout' %}?next=/">Logout</a>
+                        </li>
+                    </ul>
                 {% else %}
                     Not Logged In
                     <a href="{% url 'login' %}?next=/">Login</a>
