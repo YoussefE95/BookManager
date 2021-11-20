@@ -7,7 +7,7 @@ Book Details
 
 {% block content %}
 <h1>Book Details</h1>
-<table class="table table-light bg-light mt-4">
+<table class="table table-borderless bg-light mt-4">
     <thead class="thead-light">
         <tr>
             <th class="text-center" scope="col">Name</th>
@@ -24,7 +24,7 @@ Book Details
                 {{ book.name }}
             </td>
             <td class="text-center align-middle">
-                <img src="{% static book.pic_path %}" width="60" height="60">
+                <img src="{% static book.pic_path %}" width="60" height="90">
             </td>
             <td class="text-center align-middle">
                 {{ book.username }}
