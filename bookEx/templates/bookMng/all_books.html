@@ -13,6 +13,7 @@ All Books
             <th class="text-center" scope="col">Name</th>
             <th class="text-center" scope="col">Cover</th>
             <th class="text-center" scope="col">Seller</th>
+            <th class="text-center" scope="col">Options</th>
         </tr>
     </thead>
     <tbody>
@@ -26,6 +27,11 @@ All Books
             </td>
             <td class="text-center align-middle">
                 {{ book.username }}
+            </td>
+            <td class="text-center align middle ">
+                <a href="shopping_cart" class="btn btn-primary btn-lg" role="button" aria-disabled="true">Add To Cart</a>
+                <a href="checkout" class="btn btn-secondary btn-lg" role="button" aria-disabled="true">Checkout</a>
+
             </td>
         </tr>
     {% endfor %}

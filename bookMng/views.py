@@ -123,6 +123,8 @@ def book_delete(request, book_id):
 
     return render(request, 'bookMng/book_delete.html')
 
+
+@login_required(login_url=reverse_lazy('login'))
 def shopping_cart(request):
     return render(request, 'bookMng/shopping_cart.html')
 
@@ -140,5 +142,6 @@ def faq(request):
                   })
 
 
-def shopping_cart(request):
-    return render(request, 'bookMng/shopping_cart.html')
+@login_required(login_url=reverse_lazy('login'))
+def checkout(request):
+    return render(request, 'bookMng/checkout.html')
