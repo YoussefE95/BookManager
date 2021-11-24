@@ -6,7 +6,37 @@ My Books
 {% endblock title %}
 
 {% block content %}
+
 <h1>Shopping Cart</h1>
+
+<table class="table table-hover table-borderless bg-light mt-4">
+    <thead class="thead-light">
+        <tr>
+            <th class="text-center" scope="col">Name</th>
+            <th class="text-center" scope="col">Price</th>
+            <th class="text-center" scope="col">Seller</th>
+            <th class="text-center" scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for book in books %}
+        <tr>
+            <td class="text-center align-middle">
+                <a href="book_details/{{ book.id }}"> {{ book.name }} </a>
+            </td>
+            <td class="text-center align-middle">
+                {{ book.price }}
+            </td>
+            <td class="text-center align-middle">
+                {{ book.username }}
+            </td>
+            <td class="text-center align-middle">
+                <a href="book_delete/{{ book.id }}"> Delete </a>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
 
 
 {% endblock content %}

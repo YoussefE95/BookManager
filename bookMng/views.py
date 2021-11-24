@@ -143,5 +143,5 @@ def faq(request):
 
 
 @login_required(login_url=reverse_lazy('login'))
-def checkout(request):
+def checkout(request, book_id):
     return render(request, 'bookMng/checkout.html')

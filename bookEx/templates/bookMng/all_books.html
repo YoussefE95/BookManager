@@ -29,9 +29,8 @@ All Books
                 {{ book.username }}
             </td>
             <td class="text-center align middle ">
-                <a href="shopping_cart" class="btn btn-primary btn-lg" role="button" aria-disabled="true">Add To Cart</a>
-                <a href="checkout" class="btn btn-secondary btn-lg" role="button" aria-disabled="true">Checkout</a>
-
+                <button type="submit" class="btn btn-primary mt-3">Add To Cart</button>
+                <a href="checkout/{{ book.id }}" class="btn btn-secondary mt-3" >Checkout</a>
             </td>
         </tr>
     {% endfor %}
