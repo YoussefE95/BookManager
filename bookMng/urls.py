@@ -13,5 +13,8 @@ urlpatterns = [
     path('about_us', views.about_us, name='about_us'),
     path('faq', views.faq, name='faq'),
     path('book_details/<int:book_id>', views.book_details, name='book_details'),
-    path('book_delete/<int:book_id>', views.book_delete, name='book_delete')
+    path('book_delete/<int:book_id>', views.book_delete, name='book_delete'),
+    path('messagebox/incoming', views.incoming_messages, name='incoming_messages'),
+    path('messagebox/outgoing', views.outgoing_messages, name='outgoing_messages'),
+    path('messagebox/compose', views.compose_message, name='compose_message')
 ]

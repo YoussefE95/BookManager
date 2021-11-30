@@ -41,4 +41,43 @@ Book Details
         </tr>
     </tbody>
 </table>
+
+{% if comments %}
+    <h3 class="mt-4">Comments Section:</h3>
+    <table class="table table-borderless bg-light mt-4">
+        <thead class="thead-light">
+            <tr>
+                <th class="text-center" scope="col">User</th>
+                <th class="text-center" scope="col">Comment</th>
+                <th class="text-center" scope="col">Posted</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for comment in comments %}
+            <tr>
+                <td class="text-center align-middle">
+                    {{ comment.username }}
+                </td>
+                <td class="text-center align-middle">
+                    {{comment.content}}
+                </td>
+                <td class="text-center align-middle">
+                    {{ comment.publishdate }}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endif %}
+
+<form class="mt-4" action="" enctype="multipart/form-data" method="post" novalidate>
+    {% csrf_token %}
+    <div class="row justify-content-center">
+        <div class="col-sm-6">
+            <label for="id_content">Add Comment: </label>
+            <textarea class="form-control" id="id_content" name="content" required></textarea>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary mt-3">Post</button>
+</form>
 {% endblock content %}

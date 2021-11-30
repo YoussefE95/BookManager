@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+Compose Message
+{% endblock title %}
+
+{% block content %}
+<h1 align="center">Compose Message</h1>
+<ul class="nav justify-content-center">
+    <li class="nav-item">
+        <a class="nav-link" href="\messagebox\incoming">Incoming</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="\messagebox\outgoing">Outgoing</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="\messagebox\compose">Compose</a>
+    </li>
+</ul>
+<form class="mt-4" action="" enctype="multipart/form-data" method="post" novalidate>
+    {% csrf_token %}
+    <div class="row justify-content-center">
+        <div class="col-sm-6">
+            <label for="id_name">Name: </label>
+            <input type="text" class="form-control" id="id_name" name="name" maxlength="100" minlength="1" required>
+            <label for="id_content">Add Comment: </label>
+            <textarea class="form-control" id="id_content" name="content" required></textarea>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary mt-3">Post</button>
+</form>
+{% endblock content %}
