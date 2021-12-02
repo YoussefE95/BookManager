@@ -4,7 +4,6 @@ from .models import Book
 from .models import Comment
 from .models import Message
 
-
 class BookForm(ModelForm):
     class Meta:
         model = Book
@@ -23,15 +22,15 @@ class CommentForm(ModelForm):
     class Meta:
         model = Comment
         fields = [
-            'name',
-            'email',
-            'comment',
+            'b_id',
+            'content'
         ]
+
 
 class MessageForm(ModelForm):
     class Meta:
         model = Message
         fields = [
             'name',
-            'message',
+            'content'
         ]

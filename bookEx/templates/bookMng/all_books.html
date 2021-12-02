@@ -13,6 +13,7 @@ All Books
             <th class="text-center" scope="col">Name</th>
             <th class="text-center" scope="col">Cover</th>
             <th class="text-center" scope="col">Seller</th>
+            <th class="text-center" scope="col">Options</th>
         </tr>
     </thead>
     <tbody>
@@ -22,10 +23,14 @@ All Books
                 <a href="book_details/{{ book.id }}"> {{ book.name }} </a>
             </td>
             <td class="text-center align-middle">
-                <img src="{% static book.pic_path %}" width="60" height="60">
+                <img src="{% static book.pic_path %}" width="60" height="90">
             </td>
             <td class="text-center align-middle">
                 {{ book.username }}
+            </td>
+            <td class="text-center align middle ">
+                <button type="submit" class="btn btn-primary mt-3">Add To Cart</button>
+                <a href="checkout/{{ book.id }}" class="btn btn-secondary mt-3" >Checkout</a>
             </td>
         </tr>
     {% endfor %}

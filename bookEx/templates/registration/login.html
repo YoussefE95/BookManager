@@ -9,20 +9,19 @@
 <h1>Login</h1>
 <form class="mt-4" action="{% url 'login' %}" method="post">
     {% csrf_token %}
-    <div class="form-row justify-content-center">
+    <div class="justify-content-center">
         <div class="form-group col-sm-4">
             <label for="id_username">Username: </label>
             <input type="text" class="textinput textInput form-control" id="id_username" name="username" autocomplete="username" maxlength="150" autofocus required>
         </div>
-        <div class="form-group col-sm-4">
+        <div class="form-group col-sm-4 mt-3">
             <label for="id_password">Password: </label>
             <input type="password" class="textinput textInput form-control" id="id_password" name="password" autocomplete="current-password" required>
         </div>
     </div>
-    <button type="submit" class="btn btn-primary mt-3 mb-5">Login</button>
+    <button type="submit" class="btn btn-primary mt-3 mb-4">Login</button>
     <input type="hidden" name="next" value="{{ next }}" />
 </form>
-<br>
 <p align="center">
     To Register, <a href="{% url 'register' %}"> Click Here </a>
 </p>

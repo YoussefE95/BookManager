@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+Outgoing Messages
+{% endblock title %}
+
+{% block content %}
+<h1 align="center">Outgoing Messages</h1>
+<ul class="nav justify-content-center">
+    <li class="nav-item">
+        <a class="nav-link" href="\messagebox\incoming">Incoming</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="\messagebox\outgoing">Outgoing</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="\messagebox\compose">Compose</a>
+    </li>
+</ul>
+<table class="table table-hover table-borderless bg-light mt-4">
+    <thead class="thead-light">
+        <tr>
+            <th class="text-center" scope="col">Name</th>
+            <th class="text-center" scope="col">Message</th>
+            <th class="text-center" scope="col">Posted</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for message in outgoing %}
+            <tr>
+                <td class="text-center align-middle">
+                    {{ message.name }}
+                </td>
+                <td class="text-center align-middle">
+                    {{message.content }}
+                </td>
+                <td class="text-center align middle ">
+                    {{message.publishdate }}
+                </td>
+            </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock content %}

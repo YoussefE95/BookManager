@@ -1,13 +1,14 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-# Create your models here.
+
 class MainMenu(models.Model):
     item = models.CharField(max_length=200, unique=True)
     link = models.CharField(max_length=200, unique=True)
 
     def __str__(self):
         return self.item
+
 
 class Book(models.Model):
     name = models.CharField(max_length=200)
@@ -21,21 +22,20 @@ class Book(models.Model):
     def __str__(self):
         return str(self.id)
 
-class Comment(models.Model):
 
-    name = models.CharField(blank=True, null=True, max_length=200)
-    email = models.EmailField(max_length=200)
-    comment = models.TextField(max_length=500)
+class Comment(models.Model):
+    b_id = models.IntegerField(blank=True, null=True,)
+    content = models.TextField(max_length=500)
     publishdate = models.DateField(auto_now=True)
     username = models.ForeignKey(User, blank=True, null=True, on_delete=models.CASCADE)
 
     def __str__(self):
         return str(self.id)
 
-class Message(models.Model):
 
+class Message(models.Model):
     name = models.CharField(max_length=200)
-    message = models.TextField(max_length=500)
+    content = models.TextField(max_length=500)
     publishdate = models.DateField(auto_now=True)
     username = models.ForeignKey(User, blank=True, null=True, on_delete=models.CASCADE)
 

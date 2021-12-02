@@ -6,9 +6,8 @@ Book Details
 {% endblock title %}
 
 {% block content %}
-
-<h1 align="center">Book Details</h1>
-<table class="table table-light bg-light mt-4">
+<h1>Book Details</h1>
+<table class="table table-borderless bg-light mt-4">
     <thead class="thead-light">
         <tr>
             <th class="text-center" scope="col">Name</th>
@@ -25,7 +24,7 @@ Book Details
                 {{ book.name }}
             </td>
             <td class="text-center align-middle">
-                <img src="{% static book.pic_path %}" width="60" height="60">
+                <img src="{% static book.pic_path %}" width="60" height="90">
             </td>
             <td class="text-center align-middle">
                 {{ book.username }}
@@ -44,29 +43,43 @@ Book Details
     </tbody>
 
 </table>
-<h2 align="left">Comments Section:</h2>
-<!--Display comments-->
-{% for comment in comments %}
-    {{ comment.name }}
-    {{ comment.email }}
-    {{ comment.publishdate }}
 
-
-    <div> <p class="font-italic">{{comment.comment}}</p> </div>
-    <br>
-
-
-{% endfor %}
-
-
-{% if submitted %}
-  <h1>Your comment has been added.</h1>
-{% else %}
-
-    <form action="" enctype="multipart/form-data" method="post" novalidate>
-        {{ form.as_p }}
-         <input type="submit" value="Add Comment">
-        {% csrf_token %}
-    </form>
+{% if comments %}
+    <h3 class="mt-4">Comments Section:</h3>
+    <table class="table table-borderless bg-light mt-4">
+        <thead class="thead-light">
+            <tr>
+                <th class="text-center" scope="col">User</th>
+                <th class="text-center" scope="col">Comment</th>
+                <th class="text-center" scope="col">Posted</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for comment in comments %}
+            <tr>
+                <td class="text-center align-middle">
+                    {{ comment.username }}
+                </td>
+                <td class="text-center align-middle">
+                    {{comment.content}}
+                </td>
+                <td class="text-center align-middle">
+                    {{ comment.publishdate }}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 {% endif %}
+
+<form class="mt-4" action="" enctype="multipart/form-data" method="post" novalidate>
+    {% csrf_token %}
+    <div class="row justify-content-center">
+        <div class="col-sm-6">
+            <label for="id_content">Add Comment: </label>
+            <textarea class="form-control" id="id_content" name="content" required></textarea>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary mt-3">Post</button>
+</form>
 {% endblock content %}

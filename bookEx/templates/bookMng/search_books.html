@@ -9,14 +9,18 @@ Search Books
 <h1>Search Books</h1>
 <form class="form-inline justify-content-center mt-4" action="" enctype="multipart/form-data" method="post" novalidate>
     {% csrf_token %}
-    <div class="form-group">
-        {% if query %}
-            <input type="text" class="form-control" id="query" name="query" maxlength="100" minlength="1" value="{{query}}" required>
-        {% else %}
-            <input type="text" class="form-control" id="query" name="query" maxlength="100" minlength="1" required>
-        {% endif %}
+    <div class="row justify-content-center">
+        <div class="col-sm-4">
+            {% if query %}
+                <input type="text" class="form-control" id="query" name="query" maxlength="100" minlength="1" value="{{query}}" required>
+            {% else %}
+                <input type="text" class="form-control" id="query" name="query" maxlength="100" minlength="1" required>
+            {% endif %}
+        </div>
+        <div class="col-auto">
+            <button type="submit" class="btn btn-primary">Search</button>
+        </div>
     </div>
-    <button type="submit" class="btn btn-primary ml-2">Search</button>
 </form>
 {% if books %}
 <br>
@@ -35,7 +39,7 @@ Search Books
                 <a href="book_details/{{ book.id }}"> {{ book.name }} </a>
             </td>
             <td class="text-center align-middle">
-                <img src="{% static book.pic_path %}" width="60" height="60">
+                <img src="{% static book.pic_path %}" width="60" height="90">
             </td>
             <td class="text-center align-middle">
                 {{ book.username }}
