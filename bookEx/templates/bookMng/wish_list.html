@@ -2,11 +2,11 @@
 {% load static %}
 
 {% block title %}
-Shopping Cart
+Wish List
 {% endblock title %}
 
 {% block content %}
-<h1>Shopping Cart</h1>
+<h1>Wish List</h1>
 <table class="table table-hover table-borderless bg-light mt-4">
     <thead class="thead-light">
         <tr>
@@ -35,24 +35,12 @@ Shopping Cart
                 &dollar;{{ book.price }}
             </td>
             <td class="text-center align-middle">
-                <a href="/remove_from_cart/{{ book.id }}">
+                <a href="/remove_from_wish_list/{{ book.id }}">
                     Delete
                 </a>
             </td>
         </tr>
     {% endfor %}
-    {% if books %}
-        <div class="d-md-flex justify-content-md-end">
-            <tr>
-                <td class="text-end align-middle" colspan="4">
-                    Total: &dollar;{{ sum }}
-                </td>
-                <td  class="text-center align-middle">
-                    <button class="btn btn-primary" href="">Purchase</button>
-                </td>
-            </tr>
-        </div>
-    {% endif %}
     </tbody>
 </table>
 {% endblock content %}

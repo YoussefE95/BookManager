@@ -1,3 +1,4 @@
+from django import shortcuts
 from django.shortcuts import render
 from django.http import HttpResponse
 from .models import MainMenu
@@ -9,6 +10,8 @@ from django.http import HttpResponseRedirect
 from .models import Book
 from .models import Comment
 from .models import Message
+from .models import ShoppingCart
+from .models import WishList
 from django.views.generic.edit import CreateView
 from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse_lazy
@@ -32,15 +35,19 @@ def index(request):
 @login_required(login_url=reverse_lazy('login'))
 def all_books(request):
     books = Book.objects.all()
+    shopping_cart = ShoppingCart.objects.filter(username=request.user)
+    wish_list = WishList.objects.filter(username=request.user)
 
     for b in books:
         b.pic_path = b.picture.url[14:]
 
     return render(request,
-            'bookMng/all_books.html',
-            {
-                'books': books
-            })
+        'bookMng/all_books.html',
+        {
+            'books': books,
+            'shopping_cart_ids': [b.b_id for b in shopping_cart],
+            'wish_list_ids': [b.b_id for b in wish_list]
+        })
 
 
 @login_required(login_url=reverse_lazy('login'))
@@ -83,10 +90,10 @@ def post_book(request):
             submitted = True
 
     return render(request,
-                'bookMng/post_book.html',
-                {
-                    'submitted': submitted
-                })
+        'bookMng/post_book.html',
+        {
+            'submitted': submitted
+        })
 
 
 @login_required(login_url=reverse_lazy('login'))
@@ -105,7 +112,6 @@ def book_details(request, book_id):
 
     book.pic_path = book.picture.url[14:]
     comments = Comment.objects.all()
-    submitted = False
     
     if request.method == 'POST':
         form = CommentForm(request.POST)
@@ -117,12 +123,10 @@ def book_details(request, book_id):
             except Exception:
                 pass
             comment.save()
+    
     return render(request,
             'bookMng/book_details.html',
             {
-                'form': form,
-                'item_list': MainMenu.objects.all(),
-                'submitted': submitted,
                 'book': book,
                 'comments': comments
             })
@@ -131,7 +135,6 @@ def book_details(request, book_id):
 @login_required(login_url=reverse_lazy('login'))
 def book_delete(request, book_id):
     Book.objects.get(id=book_id).delete()
-
     return render(request, 'bookMng/book_delete.html')
 
 
@@ -143,26 +146,28 @@ def my_books(request):
         b.pic_path = b.picture.url[14:]
 
     return render(request,
-            'bookMng/my_books.html',
-            {
-                'books': books
-            })
+        'bookMng/my_books.html',
+        {
+            'books': books
+        })
 
 
 @login_required(login_url=reverse_lazy('login'))
 def incoming_messages(request):
-    return render(request, 'bookMng/messagebox/incoming.html',
-                  {
-                      'incoming': Message.objects.filter(name=request.user)
-                  })
+    return render(request,
+        'bookMng/messagebox/incoming.html',
+        {
+            'incoming': Message.objects.filter(name=request.user)
+        })
 
 
 @login_required(login_url=reverse_lazy('login'))
 def outgoing_messages(request):
-    return render(request,'bookMng/messagebox/outgoing.html',
-                  {
-                      'outgoing': Message.objects.filter(username=request.user)
-                  })
+    return render(request,
+        'bookMng/messagebox/outgoing.html',
+        {
+            'outgoing': Message.objects.filter(username=request.user)
+        })
 
 
 @login_required(login_url=reverse_lazy('login'))
@@ -176,7 +181,8 @@ def compose_message(request):
             except Exception:
                 pass
             message.save()
-            return render(request, 'bookMng/messagebox/incoming.html',
+            return render(request,
+            'bookMng/messagebox/incoming.html',
             {
                 'incoming': Message.objects.filter(name=request.user)
             })
@@ -185,9 +191,60 @@ def compose_message(request):
 
 @login_required(login_url=reverse_lazy('login'))
 def shopping_cart(request):
-    return render(request, 'bookMng/shopping_cart.html')
+    shopping_cart = ShoppingCart.objects.filter(username=request.user)
+    books_to_buy = []
+    sum = 0
+
+    for book in shopping_cart:
+        book = Book.objects.get(id=book.b_id)
+        book.pic_path = book.picture.url[14:]
+        books_to_buy.append(book)
+        sum += book.price
+
+    return render(request,
+        'bookMng/shopping_cart.html',
+        {
+            'books': books_to_buy,
+            'sum': sum
+        })
 
 
 @login_required(login_url=reverse_lazy('login'))
-def checkout(request, book_id):
-    return render(request, 'bookMng/checkout.html')
+def add_to_cart(request, book_id):
+    ShoppingCart.objects.create(b_id=book_id, username=request.user)
+    return HttpResponseRedirect('/all_books')
+
+
+@login_required(login_url=reverse_lazy('login'))
+def remove_from_cart(request, book_id):
+    ShoppingCart.objects.get(b_id=book_id).delete()
+    return HttpResponseRedirect('/shopping_cart')
+
+
+@login_required(login_url=reverse_lazy('login'))
+def wish_list(request):
+    wish_list = WishList.objects.filter(username=request.user)
+    books_to_save = []
+
+    for book in wish_list:
+        book = Book.objects.get(id=book.b_id)
+        book.pic_path = book.picture.url[14:]
+        books_to_save.append(book)
+
+    return render(request,
+        'bookMng/wish_list.html',
+        {
+            'books': books_to_save,
+        })
+
+
+@login_required(login_url=reverse_lazy('login'))
+def add_to_wish_list(request, book_id):
+    WishList.objects.create(b_id=book_id, username=request.user)
+    return HttpResponseRedirect('/all_books')
+
+
+@login_required(login_url=reverse_lazy('login'))
+def remove_from_wish_list(request, book_id):
+    WishList.objects.get(b_id=book_id).delete()
+    return HttpResponseRedirect('/wish_list')

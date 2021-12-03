@@ -12,7 +12,7 @@ My Books
         <tr>
             <th class="text-center" scope="col">Name</th>
             <th class="text-center" scope="col">Cover</th>
-            <th class="text-center" scope="col">Seller</th>
+            <th class="text-center" scope="col">Price</th>
             <th class="text-center" scope="col"></th>
         </tr>
     </thead>
@@ -20,16 +20,20 @@ My Books
     {% for book in books %}
         <tr>
             <td class="text-center align-middle">
-                <a href="book_details/{{ book.id }}"> {{ book.name }} </a>
+                <a href="book_details/{{ book.id }}">
+                    {{ book.name }}
+                </a>
             </td>
             <td class="text-center align-middle">
                 <img src="{% static book.pic_path %}" width="60" height="90">
             </td>
             <td class="text-center align-middle">
-                {{ book.username }}
+                {{ book.price }}
             </td>
             <td class="text-center align-middle">
-                <a href="book_delete/{{ book.id }}"> Delete </a>
+                <a href="book_delete/{{ book.id }}">
+                    Delete
+                </a>
             </td>
         </tr>
     {% endfor %}

@@ -12,9 +12,9 @@ Book Details
         <tr>
             <th class="text-center" scope="col">Name</th>
             <th class="text-center" scope="col">Cover</th>
-            <th class="text-center" scope="col">Seller</th>
-            <th class="text-center" scope="col">Web Site</th>
             <th class="text-center" scope="col">Price</th>
+            <th class="text-center" scope="col">Web Site</th>
+            <th class="text-center" scope="col">Seller</th>
             <th class="text-center" scope="col">Publish Date</th>
         </tr>
     </thead>
@@ -27,13 +27,13 @@ Book Details
                 <img src="{% static book.pic_path %}" width="60" height="90">
             </td>
             <td class="text-center align-middle">
-                {{ book.username }}
+                {{ book.price }}
             </td>
             <td class="text-center align-middle">
                 {{ book.web }}
             </td>
             <td class="text-center align-middle">
-                {{ book.price }}
+                {{ book.username }}
             </td>
             <td class="text-center align-middle">
                 {{ book.publishdate }}

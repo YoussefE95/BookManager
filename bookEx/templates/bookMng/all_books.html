@@ -12,26 +12,43 @@ All Books
         <tr>
             <th class="text-center" scope="col">Name</th>
             <th class="text-center" scope="col">Cover</th>
+            <th class="text-center" scope="col">Price</th>
             <th class="text-center" scope="col">Seller</th>
-            <th class="text-center" scope="col">Options</th>
+            <th class="text-center" scope="col">Add To</th>
         </tr>
     </thead>
     <tbody>
     {% for book in books %}
         <tr>
             <td class="text-center align-middle">
-                <a href="book_details/{{ book.id }}"> {{ book.name }} </a>
+                <a href="book_details/{{ book.id }}">
+                    {{ book.name }}
+                </a>
             </td>
             <td class="text-center align-middle">
                 <img src="{% static book.pic_path %}" width="60" height="90">
             </td>
             <td class="text-center align-middle">
+                {{ book.price }}
+            </td>
+            <td class="text-center align-middle">
                 {{ book.username }}
             </td>
-            <td class="text-center align middle ">
-                <button type="submit" class="btn btn-primary mt-3">Add To Cart</button>
-                <a href="checkout/{{ book.id }}" class="btn btn-secondary mt-3" >Checkout</a>
+            {% if book.username != request.user %}
+            <td class="text-center align-middle">
+                {% if book.id not in shopping_cart_ids %}
+                <a href="add_to_cart/{{ book.id }}">
+                    Shopping Cart
+                </a>
+                {% endif %}
+                <br>
+                {% if book.id not in wish_list_ids %}
+                <a href="add_to_wish_list/{{ book.id }}">
+                    Wish List
+                </a>
+                {% endif %}
             </td>
+            {% endif %}
         </tr>
     {% endfor %}
     </tbody>
