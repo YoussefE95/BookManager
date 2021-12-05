@@ -6,12 +6,14 @@ from .forms import BookForm
 from .forms import SearchForm
 from .forms import CommentForm
 from .forms import MessageForm
+from .forms import RateForm
 from django.http import HttpResponseRedirect
 from .models import Book
 from .models import Comment
 from .models import Message
 from .models import ShoppingCart
 from .models import WishList
+from .models import Rate
 from django.views.generic.edit import CreateView
 from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse_lazy
@@ -78,10 +80,7 @@ def post_book(request):
         form = BookForm(request.POST, request.FILES)
         if form.is_valid():
             book = form.save(commit=False)
-            try:
-                book.username = request.user
-            except Exception:
-                pass
+            book.username = request.user
             book.save()
             return HttpResponseRedirect('/post_book?submitted=True')
     else:
@@ -111,24 +110,32 @@ def book_details(request, book_id):
     comments = Comment.objects.filter(b_id=book_id)
 
     book.pic_path = book.picture.url[14:]
-    comments = Comment.objects.all()
     
     if request.method == 'POST':
-        form = CommentForm(request.POST)
-        if form.is_valid():
-            comment = form.save(commit=False)
-            try:
-                comment.b_id = book_id
-                comment.username = request.user
-            except Exception:
-                pass
+        if CommentForm(request.POST).is_valid():
+            comment = CommentForm(request.POST).save(commit=False)
+            comment.b_id = book_id
+            comment.username = request.user
             comment.save()
+        if RateForm(request.POST).is_valid():
+            if Rate.objects.filter(b_id=book_id, username=request.user):
+                Rate.objects.filter(b_id=book_id, username=request.user).delete()
+            rating = RateForm(request.POST).save(commit=False)
+            rating.b_id = book_id
+            rating.username = request.user
+            rating.save()
+    
+    current_rating = None
+    if Rate.objects.filter(b_id=book_id, username=request.user):
+        current_rating = Rate.objects.get(b_id=book_id, username=request.user).rate
     
     return render(request,
             'bookMng/book_details.html',
             {
                 'book': book,
-                'comments': comments
+                'comments': comments,
+                'ratings': [5, 4, 3, 2, 1],
+                'current_rating': current_rating
             })
 
 
@@ -176,16 +183,15 @@ def compose_message(request):
         form = MessageForm(request.POST)
         if form.is_valid():
             message = form.save(commit=False)
-            try:
-                message.username = request.user
-            except Exception:
-                pass
+            message.username = request.user
             message.save()
+
             return render(request,
             'bookMng/messagebox/incoming.html',
             {
                 'incoming': Message.objects.filter(name=request.user)
             })
+
     return render(request, 'bookMng/messagebox/compose.html')
 
 

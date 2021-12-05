@@ -3,6 +3,8 @@ from django.forms import ModelForm
 from .models import Book
 from .models import Comment
 from .models import Message
+from .models import Rate
+
 
 class BookForm(ModelForm):
     class Meta:
@@ -18,12 +20,21 @@ class BookForm(ModelForm):
 class SearchForm(forms.Form):
     query = forms.CharField(label='query', max_length=100)
 
+
 class CommentForm(ModelForm):
     class Meta:
         model = Comment
         fields = [
             'b_id',
             'content'
+        ]
+
+
+class RateForm(ModelForm):
+    class Meta:
+        model = Rate
+        fields = [
+            'rate',
         ]
 
 

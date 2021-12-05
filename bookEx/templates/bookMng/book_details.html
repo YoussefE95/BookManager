@@ -1,3 +1,50 @@
+<style>
+    .rate {
+        margin-right:250px;
+        height: 46px;
+        padding: 0 10px;
+    }
+    .rate:not(:checked) > input {
+        position:absolute;
+        top:-9999px;
+    }
+    .rate:not(:checked) > label {
+        width:1em;
+        overflow:hidden; 
+        white-space:nowrap;
+        cursor:pointer;
+        font-size:30px;
+        color:#ff7a7a;
+    }
+
+    /* stores the star value  */
+    .rate:not(:checked) > label:before {
+        content: '★';
+    }
+
+    /* color of the stars when selected */
+    .rate > input:checked ~ label {
+        color: #ffc700;
+    }
+
+    /* when the mouse is over the star that is not clicked
+     have the darkest color */
+    .rate:not(:checked) > label:hover,
+    .rate:not(:checked) > label:hover ~ label {
+        color: #deb217;
+    }
+
+    /* when the mouse is over the star that is clicked
+     have a darker color */
+    .rate > input:checked + label:hover,
+    .rate > input:checked + label:hover ~ label,
+    .rate > input:checked ~ label:hover,
+    .rate > input:checked ~ label:hover ~ label,
+    .rate > label:hover ~ input:checked ~ label {
+        color: #c59b08;
+    }
+</style>
+
 {% extends "base.html" %}
 {% load static %}
 
@@ -39,9 +86,7 @@ Book Details
                 {{ book.publishdate }}
             </td>
         </tr>
-
     </tbody>
-
 </table>
 
 {% if comments %}
@@ -72,14 +117,31 @@ Book Details
     </table>
 {% endif %}
 
-<form class="mt-4" action="" enctype="multipart/form-data" method="post" novalidate>
-    {% csrf_token %}
-    <div class="row justify-content-center">
-        <div class="col-sm-6">
+<div class = "row mt-4">
+    <div class="col-md-8">
+        <form action="" enctype="multipart/form-data" method="post" novalidate>
+            {% csrf_token %}
             <label for="id_content">Add Comment: </label>
             <textarea class="form-control" id="id_content" name="content" required></textarea>
-        </div>
+            <button type="submit" class="btn btn-primary mt-3">Post</button>
+        </form>
     </div>
-    <button type="submit" class="btn btn-primary mt-3">Post</button>
-</form>
+    <div class="col-md-4">
+        <form action="" enctype="multipart/form-data" method="post" novalidate>
+            {% csrf_token %}
+            <div class="rate row justify-content-center">
+                {% for i in ratings %}
+                    {% if i == current_rating %}
+                        <input type="radio" id="star{{i}}" name="rate" value="{{i}}" checked/>
+                    {% else %}
+                        <input type="radio" id="star{{i}}" name="rate" value="{{i}}"/>
+                    {% endif %}
+                    <label for="star{{i}}" title="text">{{i}} stars</label>
+                {% endfor %}
+            </div>
+            <button type="submit" class="btn btn-primary mt-3">Rate</button>
+        </form>
+    </div>
+</div>
+
 {% endblock content %}
