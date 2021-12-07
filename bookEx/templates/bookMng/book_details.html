@@ -90,13 +90,13 @@ Book Details
             {% if book.username != request.user %}
             <td class="text-center align-middle">
                 {% if book.id not in shopping_cart_ids %}
-                <a href="add_to_cart/{{ book.id }}">
+                <a href="/add_to_cart/{{ book.id }}">
                     Shopping Cart
                 </a>
                 {% endif %}
                 <br>
                 {% if book.id not in wish_list_ids %}
-                <a href="add_to_wish_list/{{ book.id }}">
+                <a href="/add_to_wish_list/{{ book.id }}">
                     Wish List
                 </a>
                 {% endif %}
