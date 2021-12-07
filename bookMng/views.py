@@ -108,6 +108,8 @@ def about_us(request):
 def book_details(request, book_id):
     book = Book.objects.get(id=book_id)
     comments = Comment.objects.filter(b_id=book_id)
+    shopping_cart = ShoppingCart.objects.filter(username=request.user)
+    wish_list = WishList.objects.filter(username=request.user)
 
     book.pic_path = book.picture.url[14:]
     
@@ -135,7 +137,9 @@ def book_details(request, book_id):
                 'book': book,
                 'comments': comments,
                 'ratings': [5, 4, 3, 2, 1],
-                'current_rating': current_rating
+                'current_rating': current_rating,
+                'shopping_cart_ids': [b.b_id for b in shopping_cart],
+                'wish_list_ids': [b.b_id for b in wish_list]
             })
 
 

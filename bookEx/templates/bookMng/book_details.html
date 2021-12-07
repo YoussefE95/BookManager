@@ -1,7 +1,9 @@
 <style>
     .rate {
+        float: center;
         margin-right:250px;
-        height: 46px;
+        margin-bottom:25px;
+        height: 80px;
         padding: 0 10px;
     }
     .rate:not(:checked) > input {
@@ -10,10 +12,9 @@
     }
     .rate:not(:checked) > label {
         width:1em;
-        overflow:hidden; 
-        white-space:nowrap;
+        overflow:hidden;
         cursor:pointer;
-        font-size:30px;
+        font-size:40px;
         color:#ff7a7a;
     }
 
@@ -63,6 +64,7 @@ Book Details
             <th class="text-center" scope="col">Web Site</th>
             <th class="text-center" scope="col">Seller</th>
             <th class="text-center" scope="col">Publish Date</th>
+            <th class="text-center" scope="col">Add To</th>
         </tr>
     </thead>
     <tbody>
@@ -85,6 +87,21 @@ Book Details
             <td class="text-center align-middle">
                 {{ book.publishdate }}
             </td>
+            {% if book.username != request.user %}
+            <td class="text-center align-middle">
+                {% if book.id not in shopping_cart_ids %}
+                <a href="add_to_cart/{{ book.id }}">
+                    Shopping Cart
+                </a>
+                {% endif %}
+                <br>
+                {% if book.id not in wish_list_ids %}
+                <a href="add_to_wish_list/{{ book.id }}">
+                    Wish List
+                </a>
+                {% endif %}
+            </td>
+            {% endif %}
         </tr>
     </tbody>
 </table>
@@ -136,7 +153,7 @@ Book Details
                     {% else %}
                         <input type="radio" id="star{{i}}" name="rate" value="{{i}}"/>
                     {% endif %}
-                    <label for="star{{i}}" title="text">{{i}} stars</label>
+                    <label for="star{{i}}" title="text"><br>{{i}}</label>
                 {% endfor %}
             </div>
             <button type="submit" class="btn btn-primary mt-3">Rate</button>
