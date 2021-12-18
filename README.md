@@ -19,6 +19,7 @@ python3 manage.py migrate
 ```
 
 ## Run the Project
+The project can now be run with the following command:
 ```bash
 python3 manage.py runserver
 ```
